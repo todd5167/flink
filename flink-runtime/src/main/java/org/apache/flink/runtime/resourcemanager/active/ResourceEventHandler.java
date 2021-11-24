@@ -26,7 +26,7 @@ import java.util.Collection;
 /** Callback interfaces for handling resource events from external resource managers. */
 public interface ResourceEventHandler<WorkerType extends ResourceIDRetrievable> {
 
-    /**
+    /**  通知先前尝试的 workers 已从外部资源管理器中恢复。
      * Notifies that workers of previous attempt have been recovered from the external resource
      * manager.
      *

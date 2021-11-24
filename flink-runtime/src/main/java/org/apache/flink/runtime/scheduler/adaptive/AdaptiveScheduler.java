@@ -251,7 +251,7 @@ public class AdaptiveScheduler
         this.checkpointsCleaner = new CheckpointsCleaner();
 
         this.slotAllocator = slotAllocator;
-
+        //为 declarativeSlotPool 注册新增Slot事件
         declarativeSlotPool.registerNewSlotsListener(this::newResourcesAvailable);
 
         this.componentMainThreadExecutor = mainThreadExecutor;

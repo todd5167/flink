@@ -47,7 +47,7 @@ import java.util.concurrent.CompletionException;
 
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
-/**
+/**    直接调用 DispatcherGateway 方法进行作业提交，而不是走REST API
  * A base class for {@link PipelineExecutor executors} that invoke directly methods of the {@link
  * org.apache.flink.runtime.dispatcher.DispatcherGateway Dispatcher} and do not go through the REST
  * API.

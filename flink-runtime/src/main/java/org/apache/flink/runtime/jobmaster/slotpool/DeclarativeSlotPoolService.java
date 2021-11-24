@@ -85,7 +85,7 @@ public class DeclarativeSlotPoolService implements SlotPoolService {
         this.clock = clock;
         this.rpcTimeout = rpcTimeout;
         this.registeredTaskManagers = new HashSet<>();
-
+        //  声明的SlotPool
         this.declarativeSlotPool =
                 declarativeSlotPoolFactory.create(
                         jobId, this::declareResourceRequirements, idleSlotTimeout, rpcTimeout);
@@ -176,7 +176,7 @@ public class DeclarativeSlotPoolService implements SlotPoolService {
                     taskManagerLocation.getResourceID());
             return Collections.emptyList();
         }
-
+        //
         return declarativeSlotPool.offerSlots(
                 offers, taskManagerLocation, taskManagerGateway, clock.relativeTimeMillis());
     }

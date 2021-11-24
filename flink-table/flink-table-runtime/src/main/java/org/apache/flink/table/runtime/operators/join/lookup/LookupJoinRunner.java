@@ -80,6 +80,7 @@ public class LookupJoinRunner extends ProcessFunction<RowData, RowData> {
         // fetcher has copied the input field when object reuse is enabled
         fetcher.flatMap(in, getFetcherCollector());
 
+
         if (isLeftOuterJoin && !collector.isCollected()) {
             outRow.replace(in, nullRow);
             outRow.setRowKind(in.getRowKind());

@@ -55,20 +55,24 @@ import java.util.stream.Collectors;
 
 /**
  * Default {@link DeclarativeSlotPool} implementation.
- *
+ *  该实现收集当前的资源需求并在 ResourceManager 中声明它们。
  * <p>The implementation collects the current resource requirements and declares them at the
- * ResourceManager. Whenever new slots are offered, the slot pool compares the offered slots to the
+ * ResourceManager.
+ *  每当提供新的插槽时，插槽池将提供的插槽与可用和所需资源的集合进行比较，并且只接受那些需要的插槽。
+ *  Whenever new slots are offered, the slot pool compares the offered slots to the
  * set of available and required resources and only accepts those slots which are required.
  *
+ *    发布的slot 不会直接归还给其所有者。 相反，slot pool 实现只会在空闲插槽超过 idleSlotTimeout 后才返回它们。
  * <p>Slots which are released won't be returned directly to their owners. Instead, the slot pool
  * implementation will only return them after the idleSlotTimeout has been exceeded by a free slot.
  *
+ *
  * <p>The slot pool will call {@link #newSlotsListener} whenever newly offered slots are accepted or
  * if an allocated slot should become free after it is being {@link #freeReservedSlot freed}.
- *
+ *    此类需要 2 种访问模式中的一种来更改需求，不应混合使用：
  * <p>This class expects 1 of 2 access patterns for changing requirements, which should not be
  * mixed:
- *
+ *    1) 传统方法（由 DefaultScheduler 使用）将需求与申请插槽紧密耦合。
  * <p>1) the legacy approach (used by the DefaultScheduler) tightly couples requirements to reserved
  * slots. When a slot is requested it increases the requirements, when the slot is freed they are
  * decreased again. In the general case what happens is that requirements are increased, a free slot
@@ -76,7 +80,7 @@ import java.util.stream.Collectors;
  * this end {@link #freeReservedSlot}, {@link #releaseSlot} and {@link #releaseSlots} return a
  * {@link ResourceCounter} describing which requirement the slot(s) were fulfilling, with the
  * expectation that the scheduler will subsequently decrease the requirements by that amount.
- *
+ *       AdaptiveScheduler： 完全根据给定作业当前的需求来派生需求。 可以重复 申请/释放 Slot不需要对需求做任何修改
  * <p>2) The declarative approach (used by the AdaptiveScheduler) in contrast derives requirements
  * exclusively based on what a given job currently requires. It may repeatedly reserve/free slots
  * without any modifications to the requirements.
@@ -91,13 +95,13 @@ public class DefaultDeclarativeSlotPool implements DeclarativeSlotPool {
     private final Time rpcTimeout;
 
     private final JobID jobId;
-    private final AllocatedSlotPool slotPool;
+    private final AllocatedSlotPool slotPool;   //  已经分配的 SlotPool
 
     private final Map<AllocationID, ResourceProfile> slotToRequirementProfileMappings;
 
-    private ResourceCounter totalResourceRequirements;
+    private ResourceCounter totalResourceRequirements;      //  总的资源请求
 
-    private ResourceCounter fulfilledResourceRequirements;
+    private ResourceCounter fulfilledResourceRequirements;  // 可满足的资源请求
 
     private NewSlotsListener newSlotsListener = NoOpNewSlotsListener.INSTANCE;
 
@@ -206,13 +210,14 @@ public class DefaultDeclarativeSlotPool implements DeclarativeSlotPool {
                 }
             }
         }
-
+        //  需要接收的 acceptedSlots
         slotPool.addSlots(acceptedSlots, currentTime);
 
         if (!acceptedSlots.isEmpty()) {
             LOG.debug(
                     "Acquired new resources; new total acquired resources: {}",
                     fulfilledResourceRequirements);
+            // 回调方法，新增了 Slots
             newSlotsListener.notifyNewSlotsAreAvailable(acceptedSlots);
         }
 

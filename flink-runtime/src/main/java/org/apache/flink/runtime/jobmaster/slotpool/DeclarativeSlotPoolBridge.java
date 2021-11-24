@@ -93,7 +93,7 @@ public class DeclarativeSlotPoolBridge extends DeclarativeSlotPoolService implem
     @Override
     protected void onStart(ComponentMainThreadExecutor componentMainThreadExecutor) {
         this.componentMainThreadExecutor = componentMainThreadExecutor;
-
+        // 获得新的slot后的回调事件
         getDeclarativeSlotPool().registerNewSlotsListener(this::newSlotsAreAvailable);
 
         componentMainThreadExecutor.schedule(

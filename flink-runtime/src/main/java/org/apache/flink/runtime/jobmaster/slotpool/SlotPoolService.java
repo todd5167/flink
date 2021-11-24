@@ -55,7 +55,7 @@ public interface SlotPoolService extends AutoCloseable {
     }
 
     /**
-     * Start the encapsulated slot pool implementation.
+     * Start the encapsulated 封装 slot pool implementation.
      *
      * @param jobMasterId jobMasterId to start the service with
      * @param address address of the owner
@@ -85,7 +85,7 @@ public interface SlotPoolService extends AutoCloseable {
             Collection<SlotOffer> offers);
 
     /**
-     * Fails the allocation with the given allocationId.
+     * Fails the allocation with the given allocationId. 分配给指定的 allocationId 失败。
      *
      * @param taskManagerId taskManagerId is non-null if the signal comes from a TaskManager; if the
      *     signal comes from the ResourceManager, then it is null
@@ -113,7 +113,7 @@ public interface SlotPoolService extends AutoCloseable {
      */
     boolean releaseTaskManager(ResourceID taskManagerId, Exception cause);
 
-    /**
+    /**    SlotPool 从RM请求资源
      * Connects the SlotPool to the given ResourceManager. After this method is called, the SlotPool
      * will be able to request resources from the given ResourceManager.
      *
@@ -130,7 +130,7 @@ public interface SlotPoolService extends AutoCloseable {
      */
     void disconnectResourceManager();
 
-    /**
+    /**  创建关于属于指定 TM 的分配槽的报告。
      * Create report about the allocated slots belonging to the specified task manager.
      *
      * @param taskManagerId identifies the task manager
@@ -138,7 +138,7 @@ public interface SlotPoolService extends AutoCloseable {
      */
     AllocatedSlotReport createAllocatedSlotReport(ResourceID taskManagerId);
 
-    /**
+    /**  通知没有足够的资源来满足资源需求。
      * Notifies that not enough resources are available to fulfill the resource requirements.
      *
      * @param acquiredResources the resources that have been acquired

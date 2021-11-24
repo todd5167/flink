@@ -95,7 +95,7 @@ public class ApplicationDispatcherGatewayServiceFactory
                             fencingToken,
                             recoveredJobs,
                             (dispatcherGateway, scheduledExecutor, errorHandler) ->
-                                    new ApplicationDispatcherBootstrap(
+                                    new ApplicationDispatcherBootstrap( // 启动器
                                             application,
                                             recoveredJobIds,
                                             configuration,

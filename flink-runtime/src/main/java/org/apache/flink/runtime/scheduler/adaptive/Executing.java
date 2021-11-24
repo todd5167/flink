@@ -150,7 +150,7 @@ class Executing extends StateWithExecutionGraph implements ResourceConsumer {
     private void handleDeploymentFailure(ExecutionVertex executionVertex, JobException e) {
         executionVertex.markFailed(e);
     }
-
+    //   资源获取
     @Override
     public void notifyNewResourcesAvailable() {
         if (context.canScaleUp(getExecutionGraph())) {

@@ -32,7 +32,7 @@ import javax.annotation.Nullable;
 
 import java.util.Collection;
 
-/**
+/**   Slot pool 接口，使用 Flink 的声明式资源管理协议来获取资源。
  * Slot pool interface which uses Flink's declarative resource management protocol to acquire
  * resources.
  *
@@ -42,7 +42,7 @@ import java.util.Collection;
  */
 public interface DeclarativeSlotPool {
 
-    /**
+    /** 向slot pool中增加资源
      * Increases the resource requirements by increment.
      *
      * @param increment increment by which to increase the resource requirements
@@ -71,6 +71,7 @@ public interface DeclarativeSlotPool {
     Collection<ResourceRequirement> getResourceRequirements();
 
     /**
+     *   TM 向该slot pool提供slot, slot pool 可以根据需要自由接受任意数量的插槽。
      * Offers slots to this slot pool. The slot pool is free to accept as many slots as it needs.
      *
      * @param offers offers containing the list of slots offered to this slot pool
@@ -86,7 +87,7 @@ public interface DeclarativeSlotPool {
             TaskManagerGateway taskManagerGateway,
             long currentTime);
 
-    /**
+    /**  返回所有空闲槽（可以从槽池中分配的槽）的槽信息。
      * Returns the slot information for all free slots (slots which can be allocated from the slot
      * pool).
      *
@@ -101,7 +102,7 @@ public interface DeclarativeSlotPool {
      */
     Collection<? extends SlotInfo> getAllSlotsInformation();
 
-    /**
+    /**  检查槽池是否包含具有给定 {@link AllocationID} 的槽以及它是否空闲。
      * Checks whether the slot pool contains a slot with the given {@link AllocationID} and if it is
      * free.
      *
@@ -111,7 +112,7 @@ public interface DeclarativeSlotPool {
      */
     boolean containsFreeSlot(AllocationID allocationId);
 
-    /**
+    /**  保留由给定的 allocationId 标识的空闲槽并将其映射到给定的 requiredSlotProfile
      * Reserves the free slot identified by the given allocationId and maps it to the given
      * requiredSlotProfile.
      *
@@ -123,7 +124,7 @@ public interface DeclarativeSlotPool {
      */
     PhysicalSlot reserveFreeSlot(AllocationID allocationId, ResourceProfile requiredSlotProfile);
 
-    /**
+    /**   释放 allocationId 保存的Slot
      * Frees the reserved slot identified by the given allocationId. If no slot with allocationId
      * exists, then the call is ignored.
      *
@@ -157,7 +158,7 @@ public interface DeclarativeSlotPool {
      */
     ResourceCounter releaseSlot(AllocationID allocationId, Exception cause);
 
-    /**
+    /**  返回 slot pool 是否已注册由给定 TaskExecutor 拥有的 slot。
      * Returns whether the slot pool has a slot registered which is owned by the given TaskExecutor.
      *
      * @param owner owner identifying the TaskExecutor for which to check whether the slot pool has
@@ -174,7 +175,7 @@ public interface DeclarativeSlotPool {
      */
     void releaseIdleSlots(long currentTimeMillis);
 
-    /**
+    /**    注册listener，当获得新的slots时，被触发
      * Registers a listener which is called whenever new slots become available.
      *
      * @param listener which is called whenever new slots become available

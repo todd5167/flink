@@ -249,7 +249,7 @@ public abstract class ClusterEntrypoint implements AutoCloseableAsync, FatalErro
             final DispatcherResourceManagerComponentFactory
                     dispatcherResourceManagerComponentFactory =
                             createDispatcherResourceManagerComponentFactory(configuration);
-
+            //  ********
             clusterComponent =
                     dispatcherResourceManagerComponentFactory.create(
                             configuration,

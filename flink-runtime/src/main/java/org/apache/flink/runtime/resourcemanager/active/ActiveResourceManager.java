@@ -63,7 +63,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
  * An active implementation of {@link ResourceManager}.
- *
+ *    该资源管理器主动向外部资源管理框架请求和释放资源。 根据 ResourceManagerDriver的不同，
  * <p>This resource manager actively requests and releases resources from/to the external resource
  * management frameworks. With different {@link ResourceManagerDriver} provided, this resource
  * manager can work with various frameworks.

@@ -1140,7 +1140,7 @@ public abstract class ResourceManager<WorkerType extends ResourceIDRetrievable>
      */
     protected abstract void terminate() throws Exception;
 
-    /**
+    /**    取消注册应用程序的框架特定代码。
      * The framework specific code to deregister the application. This should report the
      * application's final status and shut down the resource manager cleanly.
      *
